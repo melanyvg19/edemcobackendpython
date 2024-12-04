@@ -1,0 +1,9 @@
+FROM python:3.12.3-bullseye as python
+WORKDIR /app/microservice_upload-file
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
+COPY main.py .
+COPY microservice.py .
+EXPOSE 3000
+CMD ["python", "main.py"]

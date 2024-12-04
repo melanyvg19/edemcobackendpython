@@ -1,0 +1,19 @@
+FROM python:3.12.3-bullseye as python
+WORKDIR /app
+COPY main.py /app/main.py
+COPY requirements.txt /app/requirements.txt
+RUN apt-get update && apt-get install -y \
+    unixodbc \
+    unixodbc-dev \
+    gcc \
+    g++ \
+    libsasl2-dev \
+    libldap2-dev \
+    libssl-dev \
+    && rm -rf /var/lib/apt/lists/*
+RUN pip install -r requirements.txt 
+RUN pip install pyodbc==5.1.0
+COPY . .
+EXPOSE 3000
+CMD ["python", "main.py"]
+

@@ -1,0 +1,164 @@
+# Deployment: get-invoices
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microservice-get-invoices
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: microservice-get-invoices
+  template:
+    metadata:
+      labels:
+        app: microservice-get-invoices
+    spec:
+      containers:
+        - name: microservice-get-invoices
+          image: microservice_get-invoices:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8092
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: microservice-get-invoices
+spec:
+  selector:
+    app: microservice-get-invoices
+  ports:
+    - port: 8092
+      targetPort: 8092
+---
+# Deployment: growatt-generation
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microservice-growatt-generation
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: microservice-growatt-generation
+  template:
+    metadata:
+      labels:
+        app: microservice-growatt-generation
+    spec:
+      containers:
+        - name: microservice-growatt-generation 
+          image: microservice_growatt-generation:latest 
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8094
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: microservice-growatt-generation
+spec:
+  selector:
+    app: microservice-growatt-generation
+  ports:
+    - port: 8094
+      targetPort: 8094
+---
+# Deployment: historic-factories
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microservice-historic-factories
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: microservice-historic-factories
+  template:
+    metadata:
+      labels:
+        app: microservice-historic-factories
+    spec:
+      containers:
+        - name: microservice-historic-factories 
+          image: microservice_historic-factories:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8090
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: microservice-historic-factories
+spec:
+  selector:
+    app: microservice-historic-factories
+  ports:
+    - port: 8090
+      targetPort: 8090
+---
+# Deployment: template-facturas
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microservice-template-facturas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: microservice-template-facturas
+  template:
+    metadata:
+      labels:
+        app: microservice-template-facturas
+    spec:
+      containers:
+        - name: microservice-template-facturas 
+          image: microservice_template-facturas:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8091
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: microservice-template-facturas
+spec:
+  selector:
+    app: microservice-template-facturas
+  ports:
+    - port: 8091
+      targetPort: 8091
+---
+# Deployment: upload-file
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microservice-upload-file
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: microservice-upload-file
+  template:
+    metadata:
+      labels:
+        app: microservice-upload-file
+    spec:
+      containers:
+        - name: microservice-upload-file
+          image: microservice_upload-file:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8093
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: microservice-upload-file
+spec:
+  selector:
+    app: microservice-upload-file
+  ports:
+    - port: 8093
+      targetPort: 8093

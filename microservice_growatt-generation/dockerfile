@@ -1,0 +1,12 @@
+FROM python:3.12.3-bullseye as python
+WORKDIR /app/microservice_growatt-generation
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY main.py .
+COPY microservice_1.py .
+COPY microservice_2.py .
+COPY process.py .
+COPY process2.py .
+COPY Automate/ Automate/
+EXPOSE 3000
+CMD ["python", "main.py"]

@@ -1,0 +1,36 @@
+FROM python:3.12.3-bullseye as python
+
+# Instalar las dependencias necesarias para pyodbc y el controlador ODBC de SQL Server
+RUN apt-get update && apt-get install -y \
+    unixodbc \
+    unixodbc-dev \
+    libpq-dev \
+    curl \
+    gnupg2 \
+    && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
+    && curl https://packages.microsoft.com/config/debian/10/prod.list > /etc/apt/sources.list.d/mssql-release.list \
+    && apt-get update && ACCEPT_EULA=Y apt-get install -y msodbcsql17
+
+# Configurar el entorno de trabajo
+WORKDIR /app/microservice_get-invoices
+
+# Crear el directorio de logs
+RUN mkdir -p microservice_get-invoices
+
+# Copiar e instalar los requisitos
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
+# Copiar los archivos Python
+COPY main.py .
+COPY cufe.py .
+COPY get_invoices.py .
+COPY registro_facturas.log .
+
+# Exponer el puerto
+EXPOSE 3000
+
+# Comando de inicio
+CMD ["python", "main.py"]
+
+

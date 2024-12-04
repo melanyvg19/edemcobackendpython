@@ -1,0 +1,31 @@
+FROM python:3.12.3-bullseye as python
+
+# Instala dependencias necesarias para pyodbc y ODBC Driver
+RUN apt-get update && apt-get install -y \
+    unixodbc-dev \
+    curl \
+    apt-transport-https \
+    gnupg2 \
+    && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
+    && curl https://packages.microsoft.com/config/debian/10/prod.list > /etc/apt/sources.list.d/mssql-release.list \
+    && apt-get update \
+    && ACCEPT_EULA=Y apt-get install -y msodbcsql17
+
+# Establecer el directorio de trabajo
+WORKDIR /app/microservice_historic-factories
+
+# Copiar y instalar dependencias
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
+# Copiar el código fuente
+COPY main.py .
+COPY microservice.py .
+COPY consultas.py .
+COPY conexionbd.py .
+
+# Exponer el puerto de la aplicación
+EXPOSE 3000
+
+# Comando para ejecutar la aplicación
+CMD ["python", "main.py"]

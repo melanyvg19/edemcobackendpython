@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  microservice_get-invoices:
+    image: microservice_get-invoices
+    container_name: microservice_get-invoices
+    build:
+      context: ./microservice_get-invoices
+    ports:
+      - "8092:8092"
+
+  microservice_growatt-generation:
+    image: microservice_growatt-generation
+    container_name: microservice_growatt-generation
+    build:
+      context: ./microservice_growatt-generation
+    ports:
+      - "8094:8094"
+
+  microservice_historic-factories:
+    image: microservice_historic-factories
+    container_name: microservice_historic-factories
+    build:
+      context: ./microservice_historic-factories
+    ports:
+      - "8090:8090"
+
+  microservice_template-facturas:
+    image: microservice_template-facturas
+    container_name: microservice_template-facturas
+    build:
+      context: ./microservice_template-facturas
+    ports:
+      - "8091:8091"
+
+  microservice_upload-file:
+    image: microservice_upload-file
+    container_name: microservice_upload-file
+    build:
+      context: ./microservice_upload-file
+    ports:
+      - "8093:8093"
